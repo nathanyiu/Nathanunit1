@@ -17,6 +17,17 @@ float outer_yellowy;
 float outer_yellow_size;
 float outer_blue2x;
 float outer_blue2y;
+float outer_green2x;
+float outer_green2y;
+float outer_green2_size;
+float outer_redx;
+float outer_redy;
+float inner_whitex;
+float inner_whitey;
+float inner_white_size;
+float inner_bluex;
+float inner_bluey;
+float inner_blue_size;
 void setup() {
   size(594,594);
   background(255);
@@ -33,6 +44,19 @@ void setup() {
   outer_yellowx = 396;
   outer_yellowy = 198;
   outer_yellow_size = 198;
+  outer_blue2x = 0;
+  outer_blue2y = 396;
+  outer_green2x = 198;
+  outer_green2y = 396;
+  outer_green2_size = 198;
+  outer_redx = 396;
+  outer_redy = 396;
+  inner_whitex = 198;
+  inner_whitey = 198;
+  inner_white_size = 66;
+  inner_bluex = 264;
+  inner_bluey = 198;
+  inner_blue_size = 66;
 }
 void draw () {
   //background(255);
@@ -67,21 +91,33 @@ void draw () {
   outer_yellow_size = outer_yellow_size + 0.4;
   //outer 7 blue
   fill(0,0,255);
-  rect(0,396,198,198);
-  
+  rect(outer_blue2x,outer_blue2y,198,198);
+  outer_blue2x = outer_blue2x - 0.2;
+  outer_blue2y = outer_blue2y + 0.2;
   //outer 8 green
   fill(28,201,29);
-  rect(198,396,198,198);
+  rect(outer_green2x,outer_green2y,outer_green2_size,198);
+  outer_green2x = outer_green2x - 0.2;
+  outer_green2y = outer_green2y + 0.2;
+  outer_green2_size = outer_green2_size + 0.4;
   //outer 9 red
   fill(255,0,0);
-  rect(396,396,198,198);
+  rect(outer_redx,outer_redy,198,198);
+  outer_redx = outer_redx + 0.2;
+  outer_redy = outer_redy + 0.2;
   //inner 1 white
   strokeWeight(5);
   fill(255,255,255);
-  rect(198,198,66,66);
+  rect(inner_whitex,inner_whitey,inner_white_size,inner_white_size);
+  inner_whitex = inner_whitex - 0.2;
+  inner_whitey = inner_whitey - 0.2;
+  inner_white_size = map(inner_whitex,198,0,66,198);
   //inner 2 blue
   fill(0,0,255);
-  rect(264,198,66,66);
+  rect(inner_bluex,inner_bluey,inner_blue_size,inner_blue_size);
+  inner_bluex = inner_bluex - 0.2;
+  inner_bluey = inner_bluey - 0.2;
+  inner_blue_size = map(inner_bluex,
   //inner 3 green
   fill(28,201,29);
   rect(330,198,66,66);
