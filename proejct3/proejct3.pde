@@ -1,30 +1,36 @@
 float circlex;
 float thickness;
 float bucketToggle;
+float smileToggle;
+float smileX;
+float smileY;
 PImage brush;
 PImage eraser;
 PImage bucket;
+PImage smile;
 color brushColor = color(0);
 color canvas = color(255);
-PGraphics pg;
+//PGraphics pg;
 void setup() {
-  pg= createGraphics(800, 800);
+  //pg= createGraphics(800, 800);
   size(800, 800);
   background(255);
   circlex = 425;
   thickness = 1;
   bucketToggle = -1;
+  smileToggle = -1;
+  smileX = 0;
+  smileY = 0;
   brush = loadImage("cartoon brush.png");
   eraser = loadImage("eraser.png");
   bucket = loadImage("bucket.png");
-  fill(canvas);
-  rect(0, 115, 800, 685);
-  
+  smile = loadImage("smile.png");
+  //fill(canvas);
+  //rect(0, 115, 800, 685);
 }
 
 void draw() {
   allStuff();
-  image(pg, 0, 0);
 }
 
 void tactile(int x, int y, int w, int l) {
@@ -40,17 +46,24 @@ void mouseClicked() {
     fill(brushColor);
     circle(mouseX, mouseY, thickness);
   }
+  if (mouseX > 0 && mouseY > 115 && smileToggle > 0) {
+    image(smile, mouseX - thickness/2, mouseY - thickness/2, thickness, thickness);
+  }
+   
 }
 void mouseReleased() {
   mouseFunction();
   thickness = map(circlex, 425, 575, 1, 60);
-  if (mouseX > 540 && mouseX < 580 && mouseY > 60 && mouseY < 100) {
+  //bucket functions
+  if (mouseX > 540 && mouseX < 580 && mouseY > 60 && mouseY < 100 && bucketToggle < 0) {
     bucketToggle *= -1;
+    smileToggle = -1;
   }
   if (mouseX > 0 && mouseY > 115 && bucketToggle > 0) {
-    fill(brushColor);
-    rect(0, 115, 800, 685);
+    background(brushColor);
+    //rect(0, 115, 800, 685);
   }
+  //thickness
   if (mouseX > 417.5 && mouseX < 425 && mouseY > 37.5 && mouseY < 52.5) {
     circlex = 425;
     thickness = 1;
@@ -59,32 +72,46 @@ void mouseReleased() {
     circlex = 575;
     thickness = 60;
   }
+  //clear all function
   if (mouseX > 704 && mouseX < 784 && mouseY > 80 && mouseY < 105) {
-    canvas = color(255);
+    fill(255);
+    rect(0, 115, 800, 800);
   }
+  //back to pencil
   if (mouseX > 425 && mouseX < 465 && mouseY > 60 && mouseY < 100) {
-    brushColor = color(0);
     bucketToggle = -1;
+    smileToggle = -1;
   }
+  //back to eraser
   if (mouseX > 480 && mouseX < 520 && mouseY > 60 && mouseY < 100) {
     brushColor = color(255);
     bucketToggle = -1;
+    smileToggle = -1;
+  }
+  //smile
+  if (mouseX > 600 && mouseX < 640 && mouseY > 60 && mouseY < 100) {
+     smileToggle *= -1;
+     bucketToggle = -1;
   }
   changeColor();
 
   textRound();
 }
 void mouseDragged() {
-  pg.beginDraw();
-  pg.clear();
+  //pg.beginDraw();
+  //pg.clear();
   mouseFunction();
+  //normal draw
   thickness = map(circlex, 425, 575, 1, 60);
   if (mouseX > 0 && mouseY > 115) {
-    pg.stroke(brushColor);
-    pg.strokeWeight(thickness);
-    pg.line(pmouseX, pmouseY, mouseX, mouseY);
-    pg.endDraw();
+    stroke(brushColor);
+    strokeWeight(thickness);
+    line(pmouseX, pmouseY, mouseX, mouseY);
   }
+  if (mouseX > 0 && mouseY > 115 && smileToggle > 0) {
+    image(smile, mouseX - thickness/2, mouseY - thickness/2, thickness, thickness);
+  }
+
   textRound();
 }
 
@@ -193,24 +220,29 @@ void allStuff() {
   tactile(425, 60, 40, 40);
   fill(200);
   square(425, 60, 40);
-  image(brush, 425, 60, 40, 40);
+  image(brush, 430, 65, 30, 30);
   //eraser image
   tactile(480, 60, 40, 40);
   fill(200);
   square(480, 60, 40);
-  image(eraser, 480, 60, 40, 40);
+  image(eraser, 485, 65, 30, 30);
   //bucket button
-  tactile(540,60,40,40);
+  tactile(540, 60, 40, 40);
   fill(200);
-  square(540,60,40);
-  image(bucket,540,60,40,40);
-  //clear all button
+  square(540, 60, 40);
+  image(bucket, 545, 65, 30, 30);
+  //claer all
   tactile(704, 80, 80, 25);
   fill(0);
   rect(704, 80, 80, 25);
   fill(255);
   textSize(20);
   text("Clear all", 710, 100);
+  //smile button
+  tactile(600,60,40,40);
+  fill(200);
+  square(600,60,40);
+  image(smile,605,65,30,30);
 }
 void changeColor() {
   if (mouseX > 20 && mouseX < 70 && mouseY > 15 && mouseY < 40) {
@@ -265,18 +297,17 @@ void changeColor() {
     brushColor = color(138, 31, 255);
   }
   if (mouseX > 295 && mouseX < 345 && mouseY > 75 && mouseY < 100) {
-    brushColor = color(196,151,245);
+    brushColor = color(196, 151, 245);
   }
   if (mouseX > 350 && mouseX < 400 && mouseY > 15 && mouseY < 40) {
-    brushColor = color(112,66,20);
+    brushColor = color(112, 66, 20);
   }
   if (mouseX > 350 && mouseX < 400 && mouseY > 45 && mouseY < 70) {
-    brushColor = color(160,82,45);
+    brushColor = color(160, 82, 45);
   }
   if (mouseX > 350 && mouseX < 400 && mouseY > 75 && mouseY < 100) {
-    brushColor = color(195,176,145);
+    brushColor = color(195, 176, 145);
   }
-  
 }
 
 void textRound() {
