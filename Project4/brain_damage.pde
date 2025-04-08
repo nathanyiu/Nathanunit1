@@ -4,6 +4,7 @@ float triangleY;
 int arcCurrent;
 int red;
 int colorTimer;
+float sparkX, sparkY;
 void setup() {
   arcCurrent=10;
   size(800, 500);
@@ -16,7 +17,7 @@ void setup() {
 void draw() {
   background(0);
   portal(250, 400);
-  arcCurrent=arcCurrent+1;
+  arcCurrent=arcCurrent+50;
   if (red==255) {
     colorTimer=1;
   }
@@ -31,7 +32,6 @@ void draw() {
     red=red+5;
     green=green+5;
   }
-  println(red, green);
   if (green>150) {
     green=150;
   }
@@ -45,14 +45,8 @@ void portal(float x,float y) {
   stroke(red, green, 0);
   arc(x, y, 100, 100, 0, radians(arcCurrent));
   stroke(#FA7900);
-  translate(triangleX+250, triangleY+400);
-  pushMatrix();
-  fill(#00E36B);
-  rotate(radians(arcCurrent));
-  noStroke();
-  
-  triangle(0, 0, 50, 0, 0, -50);
-  fill(0);
-  popMatrix();
+  for (int i = 0; i <= 5; i++) {
+  sparks();
+  }
   
 }
