@@ -5,19 +5,31 @@ int arcCurrent;
 int red;
 int colorTimer;
 float sparkX, sparkY;
+int count;
+float circleX, circleY;
+float x, y;
+float radius;
 void setup() {
   arcCurrent=10;
   size(800, 500);
   fill(0);
   rect(0, 0, 800, 500);
-  
+  count = 0;
   green=10;
+  x=random(0, 800);
+  y=random(0, 500);
+  radius=random(100, 300);
+  
+  
+
 }
 
 void draw() {
-  background(0);
-  portal(250, 400);
-  arcCurrent=arcCurrent+50;
+  
+  portal(x, y);
+  //background(0);
+  //portal(250, 400);
+  arcCurrent=arcCurrent+100;
   if (red==255) {
     colorTimer=1;
   }
@@ -35,18 +47,22 @@ void draw() {
   if (green>150) {
     green=150;
   }
-  triangleX= 50*cos(radians(arcCurrent));
-  triangleY= 50*sin(radians(arcCurrent));
+  triangleX= 50*cos(radians(arcCurrent))+x;
+  triangleY= 50*sin(radians(arcCurrent))+y;
 }
 
-void portal(float x,float y) {
- 
+void portal(float x, float y) {
+  circleX=x;
+  circleY=Y;
   strokeWeight(10);
   stroke(red, green, 0);
-  arc(x, y, 100, 100, 0, radians(arcCurrent));
+  arc(x, y, radius, radius, 0, radians(arcCurrent));
   stroke(#FA7900);
-  for (int i = 0; i <= 5; i++) {
+ 
   sparks();
-  }
   
+  
+  //stroke(0);
+  //strokeWeight(80);
+  //arc(x, y, 110, 110, 0, radians(arcCurrent-10));
 }
