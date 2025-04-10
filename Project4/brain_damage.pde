@@ -19,16 +19,11 @@ void setup() {
   x=random(0, 800);
   y=random(0, 500);
   radius=random(100, 300);
-  
-  
-
 }
 
 void draw() {
   
   portal(x, y);
-  //background(0);
-  //portal(250, 400);
   arcCurrent=arcCurrent+100;
   if (red==255) {
     colorTimer=1;
@@ -58,11 +53,6 @@ void portal(float x, float y) {
   stroke(red, green, 0);
   arc(x, y, radius, radius, 0, radians(arcCurrent));
   stroke(#FA7900);
- 
   sparks();
   
-  
-  //stroke(0);
-  //strokeWeight(80);
-  //arc(x, y, 110, 110, 0, radians(arcCurrent-10));
 }
