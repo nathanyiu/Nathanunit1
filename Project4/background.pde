@@ -14,7 +14,7 @@ void background() {
   fill(50);
   rect(0, 100, 2000, 650);
   changeBack();
-  for (int i = 0; i < 15; i++) {
+  for (int i = 0; i < (int)random(15,20); i++) {
     rays(random(1100, 2050));
   }
   //clouds
@@ -86,6 +86,7 @@ void cloud(int x, int y, int sun) {
   popMatrix();
 }
 void rays(float x) {
+  noStroke();
   int wid = (int)random(50, 100);
   color orange = color(255, 222, 167);
   color white = color(81);
