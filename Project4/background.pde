@@ -1,11 +1,3 @@
-int ran; //<>//
-void setup() {
-  size(2000, 1000);
-  ran = 1;
-  background();
-}
-void draw() {
-}
 void background() {
   background(254, 252, 216);//81
   noStroke();
@@ -14,7 +6,7 @@ void background() {
   fill(50);
   rect(0, 100, 2000, 650);
   changeBack();
-  for (int i = 0; i < (int)random(15,20); i++) {
+  for (int i = 0; i < (int)random(15, 20); i++) {
     rays(random(1100, 2050));
   }
   //clouds
