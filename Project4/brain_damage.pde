@@ -25,7 +25,7 @@ void setup() {
   green=10;
   x=random(0, 800);
   y=random(350, 750);
-  radius=random(100, 300);
+  radius=random(250, 300);
   pg=createGraphics(2000, 1000);
   portal=createGraphics(2000, 1000);
   character1X=x;
@@ -95,4 +95,6 @@ void check() {
   character2Y=y;
   character3X=x;
   character3Y=y;
+  character4X=x;
+  character4Y=y;
 }
