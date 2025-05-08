@@ -1,111 +1,71 @@
+//char cord
 float player1x, player1y;
 float player1Bx, player1By;
 float player2x, player2y;
 float player2Bx, player2By;
 float ballx,bally,balld;
 float vx, vy;
+float ballvx, ballvy;
+//movemnt
 boolean wkey, akey,skey,dkey;
 boolean upkey,leftkey,downkey,rightkey;
-boolean Touch1Top,Touch1Left,Touch1Down, Touch1Right;
-boolean player1B, player2B;
+//player collision
+boolean OneTouch2Top,OneTouch2Left,OneTouch2Down, OneTouch2Right;
+boolean OneTouch2BTop, OneTouch2BLeft, OneTouch2BDown, OneTouch2BRight;
+boolean OneTouch1BTop, OneTouch1BLeft, OneTouch1BDown, OneTouch1BRight;
+boolean OneBTouch2BTop, OneBTouch2BLeft, OneBTouch2BDown, OneBTouch2BRight;
+boolean OneBTouch2Top, OneBTouch2Left, OneBTouch2Down, OneBTouch2Right;
+boolean TwoTouch2BTop, TwoTouch2BLeft, TwoTouch2BDown, TwoTouch2BRight;
+float player1B, player2B;
+int Mode, Intro, Controls, Game, GG;
 void setup() {
-  size(1200,680);
+  size(1200,880);
   player1x = width/4;
-  player1y = 255;
+  player1y = 455;
   player1Bx = width/4;
-  player1By = 425;
+  player1By = 625;
   player2x = width/4 * 3;
-  player2y = 255;
+  player2y = 455;
   player2Bx = width/4 * 3;
-  player2By = 425;
+  player2By = 625;
   ballx = 600;
-  bally = 340;
+  bally = 540;
   balld = 50;
-  vx = -5;
-  vy = -5;
-  
+  vx = -3;
+  vy = -3;
+  ballvx = 0;
+  ballvy = 0;
+  player1B = -1;
+  player2B = -1;
+  Intro = 0;
+  Controls = 1;
+  Game = 2;
+  GG = 3;
+  Mode = Intro;
 }
 void draw() {
-  background(58,201,57);
-  stroke(255);
-  strokeWeight(5);
-  fill(58,201,57);
-  rect(75,0,1050,680);
-  circle(600,340,190);
-  line(600,0,600,680);
-  //goal area
-  rect(30,240.4,45,200);
-  rect(1125,240.4,50,200);
-  circle(180,340,130);
-  rect(75,200,140,280);
-  circle(1020,340,130);
-  rect(985,200,140,280);
-  fill(255);
-  circle(180,340,5);
-  circle(1020,340,5);
-  circle(600,340,25);
-  noStroke();
-  player1A(player1x,player1y);
-  player1B(player1Bx,player1By);
-  player2A(player2x,player2y);
-  player2B(player2Bx,player2By);
-  ball(ballx,bally);
-  if (wkey == true && Touch1Top == false) {
-    player1y += vy;
+  if (Mode == Intro) {
+     Intro();
   }
-  if (akey == true && Touch1Left == false) {
-    player1x += vx;
+  if (Mode == Controls) {
+    Controls(); 
   }
-  if (skey == true && Touch1Down == false) {
-    player1y -= vy;
+  if (Mode == Game) {
+    Game(); 
   }
-  if (dkey == true && Touch1Right == false) {
-    player1x -= vx;
-  }
-  if (upkey == true && Touch1Down == false ) {
-    player2y += vy;
-  }
-  if (leftkey == true && Touch1Right == false) {
-    player2x += vx;
-  }
-  if (downkey == true && Touch1Top == false) {
-    player2y -= vy;
-  }
-  if (rightkey == true && Touch1Left == false) {
-    player2x -= vx;
-  }
-  if (dist(player1x,player1y,player2x,player2y) <= 52){
-    if (player1x - player2x < 0) {
-      dkey = false; 
-      leftkey = false;
-      Touch1Right = true;
-    } 
-    if (player1x - player2x > 0) {
-      akey = false;
-      rightkey = false;
-      Touch1Left = true;
-    }
-    if (player1y - player2y < 0) {
-      skey = false;
-      upkey = false;
-      Touch1Down = true;
-    }
-    if (player1y - player2y > 0) {
-      wkey = false;
-      downkey = false;
-      Touch1Top = true;
-    }
-  } else {
-    Touch1Right = false; 
-    Touch1Left = false;
-    Touch1Down = false;
-    Touch1Top = false;
+  if (Mode == GG) {
+    GG(); 
   }
 }
 void player1A(float player1x, float player1y) {
   pushMatrix();
   translate(player1x,player1y);
-  stroke(0);
+  strokeWeight(1);
+  if (player1B == -1) {
+    stroke(255,0,0);
+  } else {
+    stroke(0);
+  }
   strokeWeight(2);
   fill(255);
   circle(0,0,50);
@@ -114,12 +74,22 @@ void player1A(float player1x, float player1y) {
 void player1B(float player1x, float player1y) {
   pushMatrix();
   translate(player1x, player1y);
+  if (player1B == 1) {
+    stroke(255,0,0);
+  } else {
+    stroke(0);
+  }
   circle(0,0,50);
   popMatrix();
 }
 void player2A(float player2x, float player2y) {
    pushMatrix();
    translate(player2x,player2y);
+   if (player2B == -1) {
+    stroke(255,0,0);
+  } else {
+    stroke(0);
+  }
    fill(0,0,255);
    circle(0,0,50);
    popMatrix();
@@ -127,12 +97,18 @@ void player2A(float player2x, float player2y) {
 void player2B (float player2x, float player2y) {
   pushMatrix();
   translate(player2x,player2y);
+  if (player2B == 1) {
+    stroke(255,0,0);
+  } else {
+    stroke(0);
+  }
   circle(0,0,50);
   popMatrix();
 }
 void ball(float ballx, float bally) {
   pushMatrix();
   translate(ballx,bally);
+  stroke(0);
   fill(80,80,80);
   circle(0,0,29);
   popMatrix();
@@ -150,17 +126,23 @@ void keyPressed() {
  if (key == 'd') {
    dkey = true;
  }
- if (keyCode == UP) {
+ if (key == 'u') {
    upkey = true;
  }
- if (keyCode == LEFT) {
+ if (key == 'h') {  
    leftkey = true;
  }
- if (keyCode == DOWN) {
+ if (key == 'j') {
    downkey = true;
  }
- if (keyCode == RIGHT) {
+ if (key == 'k') {
    rightkey = true;
+ }
+ if (key == 'e') {
+    player1B *= -1;
+ }
+ if (key == 'i') {
+   player2B *= -1; 
  }
 }
 void keyReleased() {
@@ -176,16 +158,24 @@ void keyReleased() {
  if (key == 'd') {
    dkey = false;
  }
- if (keyCode == UP) {
+ if (key == 'u') {
    upkey = false;
  }
- if (keyCode == LEFT) {
+ if (key == 'h') {  
    leftkey = false;
  }
- if (keyCode == DOWN) {
+ if (key == 'j') {
    downkey = false;
  }
- if (keyCode == RIGHT) {
+ if (key == 'k') {
    rightkey = false;
  }
+}
+void mouseClicked() {
+  if (mouseX > 400 && mouseX < 800 && mouseY > 300 && mouseY < 425 && Mode == Intro) {
+    Mode = Game; 
+  }
+  if (mouseX > 400 && mouseX < 800 && mouseY > 450 && mouseY < 575 && Mode == Intro) {
+    Mode = Controls; 
+  }
 }
